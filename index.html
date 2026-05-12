@@ -26,7 +26,7 @@
             border-radius: 4px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.3);
             width: 900px;
-            height: 80px; /* 增加高度以容納日期 */
+            height: 80px;
             margin-bottom: 40px;
             overflow: hidden;
         }
@@ -67,13 +67,13 @@
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center; /* 居中隊伍名稱 */
+            justify-content: center;
             padding: 0 15px;
             font-size: 24px;
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 1px 1px 2px #000;
-            font-family: 'Microsoft JhengHei', sans-serif; /* 使用微軟正黑體 */
+            font-family: 'Microsoft JhengHei', sans-serif;
         }
 
         .team-bg-blue { background: linear-gradient(to right, #00538C, #003355); }
@@ -85,7 +85,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px; /* 加大分數 */
+            font-size: 40px;
             border-left: 2px solid #000;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
@@ -96,7 +96,7 @@
             background-color: #dedede;
             color: #000;
             border-left: 2px solid #000;
-            width: 250px; /* 增加寬度以填補空白 */
+            width: 250px;
         }
 
         .quarter {
@@ -111,15 +111,12 @@
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center; /* 居中時間 */
+            justify-content: center;
             padding: 0 15px;
-            font-size: 36px; /* 加大時間 */
+            font-size: 36px;
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
         }
-
-        /* 移除 24 秒計時器的 CSS */
-        /* .shot-clock { ... } */
 
         /* ================= 下方控制台 (Admin Panel) ================= */
         .control-panel {
@@ -172,18 +169,16 @@
             border-radius: 3px;
         }
 
-        /* 強調勝利方隊伍 */
         .winner-text {
-            color: #ffca28; /* 金色 */
+            color: #ffca28;
             font-weight: bold;
         }
 
-        /* 碼表顯示風格 */
         #stopwatch-display {
             font-size: 48px;
             font-family: monospace;
             background-color: #000;
-            color: #2ecc71; /* 綠色發光效果 */
+            color: #2ecc71;
             padding: 10px;
             border-radius: 8px;
             text-align: center;
@@ -197,7 +192,8 @@
     <div class="scoreboard-container">
         <div class="network-logo-container">
             <div class="network-logo">ESPN</div>
-            <div class="today-date" id="display-date"></div> </div>
+            <div class="today-date" id="display-date"></div>
+        </div>
         
         <div class="team-section team-bg-blue">
             <div class="team-name" id="display-team-a">TEAM 1</div>
@@ -212,7 +208,7 @@
         <div class="game-info">
             <div class="quarter">1ST</div>
             <div class="clock" id="display-clock">10:00</div>
-            </div>
+        </div>
     </div>
 
     <div class="control-panel">
@@ -255,9 +251,11 @@
 
         <div class="panel-section">
             <h3>時間起停控制</h3>
-            <div id="stopwatch-display">10:00</div> <button class="btn btn-green" onclick="startTimer()">▶ 啟動</button>
+            <div id="stopwatch-display">10:00</div>
+            <button class="btn btn-green" onclick="startTimer()">▶ 啟動</button>
             <button class="btn btn-red" onclick="pauseTimer()">⏸ 暫停</button>
-            <button class="btn" onclick="resetTimer(480)">重置 (8分鐘)</button> <button class="btn" onclick="resetTimer(600)">重置 (10分鐘)</button>
+            <button class="btn" onclick="resetTimer(480)">重置 (8分鐘)</button>
+            <button class="btn" onclick="resetTimer(600)">重置 (10分鐘)</button>
             <button class="btn" onclick="resetTimer(720)">重置 (12分鐘)</button>
         </div>
 
@@ -269,8 +267,7 @@
                     <button class="btn btn-red" onclick="clearHistory()">🗑 一鍵消除紀錄</button>
                 </div>
             </div>
-            <ul class="history-list" id="history-container">
-                </ul>
+            <ul class="history-list" id="history-container"></ul>
         </div>
 
     </div>
@@ -279,7 +276,7 @@
         // ================= 變數初始化 =================
         let scoreA = 0;
         let scoreB = 0;
-        let timeRemaining = 600; // 預設 10 分鐘 (600秒)
+        let timeRemaining = 600;
         let timerInterval = null;
         let isRunning = false;
         let matchHistory = [];
@@ -297,10 +294,10 @@
 
         // ================= 系統自我除錯與初始化 =================
         function init() {
-            updateTeams(); // 載入預設四支隊伍
+            updateTeams();
             updateClockDisplay();
-            loadHistory(); // 嘗試從 LocalStorage 讀取紀錄
-            updateDate(); // 更新日期顯示
+            loadHistory();
+            updateDate();
         }
 
         // ================= 日期管理模組 =================
@@ -319,7 +316,6 @@
                 document.getElementById('t4').value || "TEAM 4"
             ];
             
-            // 儲存當前選擇，避免更新下拉選單時跳掉
             const currentA = selectTeamA.value;
             const currentB = selectTeamB.value;
 
@@ -331,7 +327,6 @@
                 selectTeamB.add(new Option(team, team));
             });
 
-            // 系統防呆：如果沒有當前選擇，預設選 1 和 2
             selectTeamA.value = teams.includes(currentA) ? currentA : teams[0];
             selectTeamB.value = teams.includes(currentB) ? currentB : teams[1];
             
@@ -339,15 +334,13 @@
         }
 
         function changeMatchup() {
-            // 系統防呆：防止左右邊選到同一隊
             if (selectTeamA.value === selectTeamB.value) {
                 alert("防呆提示：主客隊不能是同一支隊伍喔！");
                 return;
             }
-            displayTeamA.textContent = selectTeamA.value.substring(0, 3); // 轉播字卡通常顯示簡稱
+            displayTeamA.textContent = selectTeamA.value.substring(0, 3);
             displayTeamB.textContent = selectTeamB.value.substring(0, 3);
             
-            // 換對戰組合時自動分數歸零
             scoreA = 0;
             scoreB = 0;
             updateScoreDisplay();
@@ -357,7 +350,7 @@
         function adjustScore(team, amount) {
             if (team === 'A') {
                 scoreA += amount;
-                if (scoreA < 0) scoreA = 0; // 自主 DEBUG: 分數不允許為負數
+                if (scoreA < 0) scoreA = 0;
             } else {
                 scoreB += amount;
                 if (scoreB < 0) scoreB = 0;
@@ -372,7 +365,7 @@
 
         // ================= 時間管理模組 =================
         function startTimer() {
-            if (isRunning) return; // 避免重複觸發
+            if (isRunning) return;
             if (timeRemaining <= 0) return;
             
             isRunning = true;
@@ -400,7 +393,6 @@
         function updateClockDisplay() {
             const minutes = Math.floor(timeRemaining / 60);
             const seconds = timeRemaining % 60;
-            // 格式化為 MM:SS
             const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             displayClock.textContent = formattedTime;
             stopwatchDisplay.textContent = formattedTime;
@@ -425,14 +417,12 @@
                 winner = "平手";
             }
 
-            // 移除時間戳記，強調勝利方
             const matchRecord = `${teamAFormatted} (${scoreA}) vs ${teamBFormatted} (${scoreB}) - 獲勝方：<span class="winner-text">${winner}</span>`;
-            matchHistory.unshift(matchRecord); // 加到陣列最前面 (最新在最上)
+            matchHistory.unshift(matchRecord);
             
             updateHistoryDisplay();
             saveToLocalStorage();
             
-            // 儲存後將比分歸零，準備下一局
             scoreA = 0; scoreB = 0; updateScoreDisplay();
             resetTimer(600);
         }
@@ -459,7 +449,6 @@
             });
         }
 
-        // 本地儲存 (即使重新整理網頁紀錄也不會不見)
         function saveToLocalStorage() {
             localStorage.setItem('basketball_history', JSON.stringify(matchHistory));
         }
